@@ -20,6 +20,7 @@
     <junit.version>5.10.2</junit.version>
     <logback.version>1.5.2</logback.version>
     <slf4j.version>2.0.12</slf4j.version>
+    <micronaut.version>4.3.9</micronaut.version>
     <skip.tests>false</skip.tests>
   </properties>
 
@@ -27,7 +28,7 @@
     <dependency>
         <groupId>io.micronaut</groupId>
         <artifactId>micronaut-http-server-netty</artifactId>
-        <version>4.3.9</version>
+        <version>${micronaut.version}</version>
         <scope>runtime</scope>
     </dependency>
     <dependency>
