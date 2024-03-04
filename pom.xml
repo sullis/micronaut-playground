@@ -59,6 +59,12 @@
         <version>${junit.version}</version>
         <scope>test</scope>
     </dependency>
+      <dependency>
+          <groupId>io.micronaut.test</groupId>
+          <artifactId>micronaut-test-junit5</artifactId>
+          <version>4.2.1</version>
+          <scope>test</scope>
+      </dependency>
     <dependency>
         <groupId>ch.qos.logback</groupId>
         <artifactId>logback-core</artifactId>
