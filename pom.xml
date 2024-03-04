@@ -27,7 +27,7 @@
     <dependency>
         <groupId>io.micronaut</groupId>
         <artifactId>micronaut-http-server-netty</artifactId>
-        <version>4.3.7</version>
+        <version>4.3.9</version>
         <scope>runtime</scope>
     </dependency>
     <dependency>
