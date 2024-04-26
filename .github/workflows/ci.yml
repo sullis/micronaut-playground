@@ -26,5 +26,7 @@ jobs:
         cache: 'maven'
     - name: ulimit
       run: ulimit -l
+    - name: print Java version
+      run: java --version
     - name: Build
       run: sudo env "PATH=$PATH" bash -c "ulimit -l 65536 && ulimit -a && mvn --no-transfer-progress -B clean test"
