@@ -9,6 +9,9 @@ on:
     branches:
       - main
 
+env:
+  MAVEN_OPTS: -verbose:class
+
 jobs:
   build:
     strategy:
