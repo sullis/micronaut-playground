@@ -66,6 +66,12 @@
         <classifier>linux-x86_64</classifier>
     </dependency>
     <dependency>
+        <groupId>io.netty.incubator</groupId>
+        <artifactId>netty-incubator-transport-native-io_uring</artifactId>
+        <version>0.0.25.Final</version>
+        <classifier>linux-aarch_64</classifier>
+    </dependency>
+    <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>${slf4j.version}</version>
