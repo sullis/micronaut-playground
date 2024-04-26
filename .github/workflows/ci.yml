@@ -9,9 +9,6 @@ on:
     branches:
       - main
 
-env:
-  MAVEN_OPTS: -verbose:class
-
 jobs:
   build:
     strategy:
@@ -32,4 +29,4 @@ jobs:
     - name: print Java version
       run: java --version
     - name: Build
-      run: sudo -E bash -c "ulimit -l 65536 && ulimit -a && mvn --debug -Dmaven.surefire.debug --no-transfer-progress -B clean test"
+      run: sudo -E bash -c "ulimit -l 65536 && ulimit -a && mvn --no-transfer-progress -B clean test"
