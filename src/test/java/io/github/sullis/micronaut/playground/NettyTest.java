@@ -5,8 +5,10 @@ import io.micronaut.http.HttpVersion;
 import io.micronaut.http.server.netty.*;
 import io.micronaut.http.server.netty.configuration.NettyHttpServerConfiguration;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import io.netty.handler.codec.compression.Zstd;
 import io.netty.handler.logging.LogLevel;
 import jakarta.inject.Inject;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import java.nio.charset.StandardCharsets;
@@ -18,6 +20,10 @@ public class NettyTest {
     @Inject
     DefaultNettyEmbeddedServerFactory nettyEmbeddedServerFactory;
 
+    @BeforeAll
+    static void beforeAllTests() throws Throwable {
+        Zstd.ensureAvailability();
+    }
 
     @Test
     public void testNetty() {
