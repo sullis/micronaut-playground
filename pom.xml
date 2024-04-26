@@ -28,6 +28,7 @@
     <junit.version>5.10.2</junit.version>
     <logback.version>1.5.6</logback.version>
     <slf4j.version>2.0.13</slf4j.version>
+    <iouring.version>0.0.25.Final</iouring.version>
     <skip.tests>false</skip.tests>
   </properties>
 
@@ -62,13 +63,13 @@
     <dependency>
         <groupId>io.netty.incubator</groupId>
         <artifactId>netty-incubator-transport-native-io_uring</artifactId>
-        <version>0.0.25.Final</version>
+        <version>${iouring.version}</version>
         <classifier>linux-x86_64</classifier>
     </dependency>
     <dependency>
         <groupId>io.netty.incubator</groupId>
         <artifactId>netty-incubator-transport-native-io_uring</artifactId>
-        <version>0.0.25.Final</version>
+        <version>${iouring.version}</version>
         <classifier>linux-aarch_64</classifier>
     </dependency>
     <dependency>
