@@ -118,6 +118,7 @@
         <plugin>
             <groupId>io.micronaut.maven</groupId>
             <artifactId>micronaut-maven-plugin</artifactId>
+            <version>4.5.3</version>
         </plugin>
         <plugin>
           <groupId>org.apache.maven.plugins</groupId>
