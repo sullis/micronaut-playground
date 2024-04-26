@@ -126,7 +126,7 @@
           <configuration>
             <rules>
               <requireJavaVersion>
-                <version>11.0</version>
+                <version>${jdk.version}</version>
               </requireJavaVersion>
             </rules>
           </configuration>
