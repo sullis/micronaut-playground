@@ -61,6 +61,10 @@
         <artifactId>micronaut-serde-jackson</artifactId>
         <scope>compile</scope>
     </dependency>
+      <dependency>
+          <groupId>io.netty</groupId>
+          <artifactId>netty-tcnative-boringssl-static</artifactId>
+      </dependency>
     <dependency>
         <groupId>io.netty.incubator</groupId>
         <artifactId>netty-incubator-transport-native-io_uring</artifactId>

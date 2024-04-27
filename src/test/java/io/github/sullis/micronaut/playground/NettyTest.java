@@ -8,6 +8,7 @@ import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.netty.handler.codec.compression.Brotli;
 import io.netty.handler.codec.compression.Zstd;
 import io.netty.handler.logging.LogLevel;
+import io.netty.handler.ssl.OpenSsl;
 import io.netty.incubator.channel.uring.IOUring;
 import jakarta.inject.Inject;
 import org.apache.commons.lang3.SystemUtils;
@@ -29,6 +30,8 @@ public class NettyTest {
 
     @BeforeAll
     static void beforeAllTests() throws Throwable {
+        OpenSsl.ensureAvailability();
+        assertThat(OpenSsl.versionString()).isEqualTo("BoringSSL");
         Zstd.ensureAvailability();
         Brotli.ensureAvailability();
         if (SystemUtils.IS_OS_LINUX) {
