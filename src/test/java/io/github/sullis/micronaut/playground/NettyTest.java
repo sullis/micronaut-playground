@@ -5,6 +5,7 @@ import io.micronaut.http.HttpVersion;
 import io.micronaut.http.server.netty.*;
 import io.micronaut.http.server.netty.configuration.NettyHttpServerConfiguration;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
+import io.netty.handler.codec.compression.Brotli;
 import io.netty.handler.codec.compression.Zstd;
 import io.netty.handler.logging.LogLevel;
 import io.netty.incubator.channel.uring.IOUring;
@@ -25,6 +26,7 @@ public class NettyTest {
     @BeforeAll
     static void beforeAllTests() throws Throwable {
         Zstd.ensureAvailability();
+        Brotli.ensureAvailability();
         if (SystemUtils.IS_OS_LINUX) {
             IOUring.ensureAvailability();
         }
