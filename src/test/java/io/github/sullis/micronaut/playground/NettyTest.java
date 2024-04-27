@@ -11,16 +11,21 @@ import io.netty.handler.logging.LogLevel;
 import io.netty.handler.ssl.OpenSsl;
 import io.netty.incubator.channel.uring.IOUring;
 import jakarta.inject.Inject;
+import org.apache.commons.compress.compressors.CompressorInputStream;
+import org.apache.commons.compress.compressors.CompressorStreamFactory;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
 
+import java.io.InputStream;
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.stream.Stream;
 
@@ -28,6 +33,8 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @MicronautTest
 public class NettyTest {
+    private static final Charset CHARSET = StandardCharsets.UTF_8;
+
     @Inject
     DefaultNettyEmbeddedServerFactory nettyEmbeddedServerFactory;
 
@@ -60,7 +67,7 @@ public class NettyTest {
         final var config = new NettyHttpServerConfiguration();
         config.setLogLevel(LogLevel.INFO);
         config.setUseNativeTransport(true);
-        config.setDefaultCharset(StandardCharsets.UTF_8);
+        config.setDefaultCharset(CHARSET);
         config.setHttpVersion(HttpVersion.HTTP_2_0);
 
         final var server = nettyEmbeddedServerFactory.build(config);
@@ -77,17 +84,37 @@ public class NettyTest {
             requestBuilder = requestBuilder.header("Accept-Encoding", acceptEncoding);
         }
         HttpRequest request = requestBuilder.build();
-        HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
+        HttpResponse<InputStream> response = client.send(request, HttpResponse.BodyHandlers.ofInputStream());
         assertThat(response.statusCode()).isEqualTo(200);
         assertThat(response.headers().firstValue("Content-Type")).isNotEmpty();
         String contentEncoding = response.headers().firstValue("Content-Encoding").orElse(null);
         assertThat(contentEncoding).isEqualTo(expectedContentEncoding);
-        if (expectedContentEncoding == null) {
-            assertThat(response.body()).isEqualTo(Constants.PAYLOAD);
+        if (null == expectedContentEncoding) {
+            String actualBody = IOUtils.toString(response.body(), CHARSET);
+            assertThat(actualBody).isEqualTo(Constants.PAYLOAD);
+        } else {
+            String decompressedBody = decompress(response.body(), expectedContentEncoding);
+            assertThat(decompressedBody).isEqualTo(Constants.PAYLOAD);
         }
 
         server.stop();
         assertThat(server.isRunning()).isFalse();
         server.close();
+    }
+
+    private static String decompress(final InputStream compressedData, final String contentEncoding) throws Exception {
+        CompressorInputStream decompressor = new CompressorStreamFactory().createCompressorInputStream(toCommonsCompressName(contentEncoding), compressedData);
+        return IOUtils.toString(decompressor, CHARSET);
+    }
+
+    private static String toCommonsCompressName(String contentEncoding) {
+        if (contentEncoding == null) {
+            return null;
+        }
+        else if (contentEncoding.equals("gzip")) {
+            return "gz";
+        } else {
+            return contentEncoding;
+        }
     }
 }
