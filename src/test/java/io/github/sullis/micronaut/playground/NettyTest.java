@@ -35,6 +35,7 @@ public class NettyTest {
         final var config = new NettyHttpServerConfiguration();
         config.setLogLevel(LogLevel.INFO);
         config.setUseNativeTransport(true);
+        config.setCompressionThreshold(1024);
         config.setDefaultCharset(StandardCharsets.UTF_8);
         config.setHttpVersion(HttpVersion.HTTP_2_0);
 
