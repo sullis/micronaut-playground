@@ -55,6 +55,7 @@ public class NettyTest {
                 Arguments.of("br", "br"),
                 Arguments.of("zstd", "zstd"),
                 Arguments.of("gzip, br", "br"),
+                Arguments.of("gzip, zstd", "zstd"),
                 Arguments.of("identity", null),
                 Arguments.of("", null),
                 Arguments.of(",", null),
