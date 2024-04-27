@@ -13,13 +13,16 @@ import io.netty.incubator.channel.uring.IOUring;
 import jakarta.inject.Inject;
 import org.apache.commons.lang3.SystemUtils;
 import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.Arguments;
+import org.junit.jupiter.params.provider.MethodSource;
 
 import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -39,8 +42,21 @@ public class NettyTest {
         }
     }
 
-    @Test
-    public void testNetty() throws Exception {
+    public static Stream<Arguments> compressionParams() {
+        return Stream.of(
+                Arguments.of("gzip", "gzip"),
+                Arguments.of("br", "br"),
+                Arguments.of("zstd", "zstd"),
+                Arguments.of("gzip, br", "br"),
+                Arguments.of("", null),
+                Arguments.of(",", null),
+                Arguments.of("bogus", null)
+        );
+    }
+
+    @ParameterizedTest
+    @MethodSource("compressionParams")
+    public void testCompression(String acceptEncoding, String expectedContentEncoding) throws Exception {
         final var config = new NettyHttpServerConfiguration();
         config.setLogLevel(LogLevel.INFO);
         config.setUseNativeTransport(true);
@@ -55,11 +71,20 @@ public class NettyTest {
         final int port = server.getPort();
 
         HttpClient client = HttpClient.newBuilder().build();
-        HttpRequest request = HttpRequest.newBuilder().GET()
-                .uri(URI.create("http://localhost:" + port + "/"))
-                .build();
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder().GET()
+                .uri(URI.create("http://localhost:" + port + "/"));
+        if (acceptEncoding != null) {
+            requestBuilder = requestBuilder.header("Accept-Encoding", acceptEncoding);
+        }
+        HttpRequest request = requestBuilder.build();
         HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
-        // todo assertThat(response.statusCode()).isEqualTo(200);
+        assertThat(response.statusCode()).isEqualTo(200);
+        assertThat(response.headers().firstValue("Content-Type")).isNotEmpty();
+        String contentEncoding = response.headers().firstValue("Content-Encoding").orElse(null);
+        assertThat(contentEncoding).isEqualTo(expectedContentEncoding);
+        if (expectedContentEncoding == null) {
+            assertThat(response.body()).isEqualTo(Constants.PAYLOAD);
+        }
 
         server.stop();
         assertThat(server.isRunning()).isFalse();
