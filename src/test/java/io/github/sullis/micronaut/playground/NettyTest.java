@@ -75,11 +75,10 @@ public class NettyTest {
         server.start();
         assertThat(server.isRunning()).isTrue();
 
-        final int port = server.getPort();
+        final URI uri = URI.create(server.getScheme() + "://localhost:" + server.getPort() + "/");
 
         HttpClient client = HttpClient.newBuilder().build();
-        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder().GET()
-                .uri(URI.create("http://localhost:" + port + "/"));
+        HttpRequest.Builder requestBuilder = HttpRequest.newBuilder().GET().uri(uri);
         if (acceptEncoding != null) {
             requestBuilder = requestBuilder.header("Accept-Encoding", acceptEncoding);
         }
