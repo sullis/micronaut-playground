@@ -77,6 +77,9 @@ public class NettyTest {
         server.start();
         assertThat(server.isRunning()).isTrue();
 
+        HttpCompressionStrategy strategy = server.getApplicationContext().findBean(HttpCompressionStrategy.class).get();
+        assertThat(strategy.isEnabled()).isTrue();
+
         final URI uri = URI.create(server.getScheme() + "://localhost:" + server.getPort() + "/");
 
         HttpClient client = HttpClient.newBuilder().build();
