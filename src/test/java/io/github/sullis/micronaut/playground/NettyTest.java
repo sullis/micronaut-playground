@@ -7,7 +7,9 @@ import io.micronaut.http.server.netty.configuration.NettyHttpServerConfiguration
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.netty.handler.codec.compression.Zstd;
 import io.netty.handler.logging.LogLevel;
+import io.netty.incubator.channel.uring.IOUring;
 import jakarta.inject.Inject;
+import org.apache.commons.lang3.SystemUtils;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
@@ -23,6 +25,9 @@ public class NettyTest {
     @BeforeAll
     static void beforeAllTests() throws Throwable {
         Zstd.ensureAvailability();
+        if (SystemUtils.IS_OS_LINUX) {
+            IOUring.ensureAvailability();
+        }
     }
 
     @Test
