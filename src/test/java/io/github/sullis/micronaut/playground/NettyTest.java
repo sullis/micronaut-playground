@@ -2,6 +2,8 @@
 package io.github.sullis.micronaut.playground;
 
 import io.micronaut.http.HttpVersion;
+import io.micronaut.http.netty.channel.EpollAvailabilityCondition;
+import io.micronaut.http.netty.channel.KQueueAvailabilityCondition;
 import io.micronaut.http.server.netty.*;
 import io.micronaut.http.server.netty.configuration.NettyHttpServerConfiguration;
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
@@ -18,6 +20,9 @@ import org.apache.commons.compress.compressors.CompressorStreamFactory;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.SystemUtils;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.condition.EnabledOnOs;
+import org.junit.jupiter.api.condition.OS;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -32,6 +37,8 @@ import java.nio.charset.StandardCharsets;
 import java.util.stream.Stream;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 
 @MicronautTest
 public class NettyTest {
@@ -110,6 +117,20 @@ public class NettyTest {
         server.stop();
         assertThat(server.isRunning()).isFalse();
         server.close();
+    }
+
+    @Test
+    @EnabledOnOs(value = OS.LINUX)
+    void epollIsAvailableOnLinux() {
+        var condition = new EpollAvailabilityCondition();
+        assertTrue(condition.matches(null));
+    }
+
+    @Test
+    @EnabledOnOs(value = OS.MAC)
+    void kqueueIsAvailableOnMac() {
+        var condition = new KQueueAvailabilityCondition();
+        assertTrue(condition.matches(null));
     }
 
     private static String decompress(final InputStream compressedData, final String contentEncoding) throws Exception {
