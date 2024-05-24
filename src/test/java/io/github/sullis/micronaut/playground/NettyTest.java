@@ -3,6 +3,7 @@ package io.github.sullis.micronaut.playground;
 
 import io.micronaut.http.HttpVersion;
 import io.micronaut.http.netty.channel.EpollAvailabilityCondition;
+import io.micronaut.http.netty.channel.IoUringAvailabilityCondition;
 import io.micronaut.http.netty.channel.KQueueAvailabilityCondition;
 import io.micronaut.http.server.netty.*;
 import io.micronaut.http.server.netty.configuration.NettyHttpServerConfiguration;
@@ -130,6 +131,13 @@ public class NettyTest {
     @EnabledOnOs(value = OS.MAC)
     void kqueueIsAvailableOnMac() {
         var condition = new KQueueAvailabilityCondition();
+        assertTrue(condition.matches(null));
+    }
+
+    @Test
+    @EnabledOnOs(value = OS.LINUX)
+    void ioUringIsAvailableOnLinux() {
+        var condition = new IoUringAvailabilityCondition();
         assertTrue(condition.matches(null));
     }
 
