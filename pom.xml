@@ -171,11 +171,6 @@
           <artifactId>maven-enforcer-plugin</artifactId>
           <version>3.4.1</version>
           <configuration>
-            <rules>
-              <requireJavaVersion>
-                <version>${jdk.version}</version>
-              </requireJavaVersion>
-            </rules>
           </configuration>
         </plugin>
       <plugin>
