@@ -42,6 +42,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>io.micronaut.sourcegen</groupId>
+                <artifactId>micronaut-sourcegen-bom</artifactId>
+                <version>1.3.1</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
