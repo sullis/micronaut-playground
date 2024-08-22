@@ -54,6 +54,26 @@
 
   <dependencies>
     <dependency>
+      <groupId>io.micronaut.sourcegen</groupId>
+      <artifactId>micronaut-sourcegen-generator</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut.sourcegen</groupId>
+      <artifactId>micronaut-sourcegen-generator-java</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut.sourcegen</groupId>
+      <artifactId>micronaut-sourcegen-generator-kotlin</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut.sourcegen</groupId>
+      <artifactId>micronaut-sourcegen-annotations</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>io.micronaut.sourcegen</groupId>
+      <artifactId>micronaut-sourcegen-model</artifactId>
+    </dependency>
+    <dependency>
         <groupId>io.micronaut</groupId>
         <artifactId>micronaut-core</artifactId>
         <scope>compile</scope>
