@@ -26,7 +26,7 @@
     <packaging>jar</packaging>
     <micronaut.runtime>netty</micronaut.runtime>
     <junit.version>5.11.4</junit.version>
-    <logback.version>1.5.16</logback.version>
+    <logback.version>1.5.17</logback.version>
     <slf4j.version>2.0.17</slf4j.version>
     <iouring.version>0.0.26.Final</iouring.version>
     <brotli4j.version>1.18.0</brotli4j.version>
