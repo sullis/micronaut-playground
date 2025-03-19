@@ -25,7 +25,7 @@
     <jdk.version>21</jdk.version>
     <packaging>jar</packaging>
     <micronaut.runtime>netty</micronaut.runtime>
-    <junit.version>5.12.0</junit.version>
+    <junit.version>5.12.1</junit.version>
     <logback.version>1.5.18</logback.version>
     <slf4j.version>2.0.17</slf4j.version>
     <iouring.version>0.0.26.Final</iouring.version>
