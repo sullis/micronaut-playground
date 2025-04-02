@@ -26,3 +26,23 @@ target/
 
 .idea/
 *.iml
+
+.classpath
+.project
+.settings/
+
+pom.xml.versionsBackup
+
+.gradle
+build/
+
+!gradle/wrapper/*.jar
+
+# sbt
+.bsp/
+
+release.properties
+pom.xml.releaseBackup
+pom.xml.next
+pom.xml.tag
+
