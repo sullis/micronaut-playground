@@ -45,7 +45,7 @@
             <dependency>
                 <groupId>io.micronaut.sourcegen</groupId>
                 <artifactId>micronaut-sourcegen-bom</artifactId>
-                <version>1.7.2</version>
+                <version>1.7.3</version>
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
