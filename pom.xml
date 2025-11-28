@@ -35,6 +35,13 @@
 
     <dependencyManagement>
         <dependencies>
+          <dependency>
+            <groupId>org.junit</groupId>
+            <artifactId>junit-bom</artifactId>
+            <version>${junit.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+          </dependency>
             <dependency>
                 <groupId>io.netty</groupId>
                 <artifactId>netty-bom</artifactId>
@@ -113,15 +120,13 @@
       <classifier>linux-x86_64</classifier>
     </dependency>
     <dependency>
-        <groupId>io.netty.incubator</groupId>
-        <artifactId>netty-incubator-transport-native-io_uring</artifactId>
-        <version>${iouring.version}</version>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-transport-native-io_uring</artifactId>
         <classifier>linux-x86_64</classifier>
     </dependency>
     <dependency>
-        <groupId>io.netty.incubator</groupId>
-        <artifactId>netty-incubator-transport-native-io_uring</artifactId>
-        <version>${iouring.version}</version>
+        <groupId>io.netty</groupId>
+        <artifactId>netty-transport-native-io_uring</artifactId>
         <classifier>linux-aarch_64</classifier>
     </dependency>
     <dependency>
@@ -147,20 +152,29 @@
     <dependency>
       <groupId>org.junit.jupiter</groupId>
       <artifactId>junit-jupiter-api</artifactId>
-      <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
       <dependency>
           <groupId>org.junit.jupiter</groupId>
           <artifactId>junit-jupiter-params</artifactId>
-          <version>${junit.version}</version>
           <scope>test</scope>
       </dependency>
     <dependency>
         <groupId>org.junit.jupiter</groupId>
         <artifactId>junit-jupiter-engine</artifactId>
-        <version>${junit.version}</version>
         <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-engine</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.junit.platform</groupId>
+      <artifactId>junit-platform-launcher</artifactId>
+      <version>${junit.version}</version>
+      <scope>test</scope>
     </dependency>
       <dependency>
           <groupId>org.assertj</groupId>

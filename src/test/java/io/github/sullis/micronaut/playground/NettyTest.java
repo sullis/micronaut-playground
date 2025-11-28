@@ -10,11 +10,11 @@ import io.micronaut.http.server.netty.configuration.NettyHttpServerConfiguration
 import io.micronaut.test.extensions.junit5.annotation.MicronautTest;
 import io.netty.channel.epoll.Epoll;
 import io.netty.channel.kqueue.KQueue;
+import io.netty.channel.uring.IoUring;
 import io.netty.handler.codec.compression.Brotli;
 import io.netty.handler.codec.compression.Zstd;
 import io.netty.handler.logging.LogLevel;
 import io.netty.handler.ssl.OpenSsl;
-import io.netty.incubator.channel.uring.IOUring;
 import jakarta.inject.Inject;
 import org.apache.commons.compress.compressors.CompressorInputStream;
 import org.apache.commons.compress.compressors.CompressorStreamFactory;
@@ -55,7 +55,7 @@ public class NettyTest {
         Zstd.ensureAvailability();
         Brotli.ensureAvailability();
         if (SystemUtils.IS_OS_LINUX) {
-            IOUring.ensureAvailability();
+            IoUring.ensureAvailability();
             Epoll.ensureAvailability();
         }
         if (SystemUtils.IS_OS_MAC_OSX) {
